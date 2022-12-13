@@ -12,7 +12,17 @@ repositories {
 dependencies {
     implementation 'org.apache.groovy:groovy:4.0.2'
     implementation 'pl.jalokim.propertiestojson:java-properties-to-json:5.2.2'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.6'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.6'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.14.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1'
+}
+
+task migrate (type: JavaExec) {
+    group('run')
+    dependsOn('classes')
+    setClasspath(sourceSets.main.runtimeClasspath)
+
+    setArgsString(gradle.startParameter.projectProperties["file"])
+
+    getMainClass().set('migrator')
 }
